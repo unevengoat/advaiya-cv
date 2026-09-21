@@ -1,0 +1,13 @@
+# Render deploy: Web Service (free tier works).
+# Build: (none needed — no dependencies). Start: npm start
+services:
+  - type: web
+    name: advaiya-cv
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
