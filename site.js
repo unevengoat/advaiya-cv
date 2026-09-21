@@ -1,5 +1,5 @@
 /* Shared site logic: language state, topbar, download dialog, page rendering.
-   Expects cv-data.js loaded first. body[data-page] is landing | classic | interactive. */
+   Expects cv-data.js loaded first. body[data-page] is landing | interactive. */
 "use strict";
 
 function params() { return new URLSearchParams(window.location.search); }
@@ -16,69 +16,6 @@ function esc(s) {
 }
 
 function interactiveHref(lang) { return INTERACTIVE_URL + "?lang=" + lang; }
-function classicHref(lang) { return CLASSIC_URL + "?lang=" + lang; }
-
-/* ---------- classic render ---------- */
-function renderClassic(d, lang) {
-  var note = '<p class="interactive-note">' +
-    d.ui.interactiveNote.split("{url}").join(esc(interactiveHref(lang))) + "</p>";
-
-  var jobs = d.experience.map(function (job) {
-    var roles = job.roles.map(function (r, i) {
-      return (i === 0
-        ? '<div class="job-head"><h3>' + esc(r.title) + ' <span class="job-org">\u2014 ' + esc(job.org) + '</span></h3><span class="job-date">' + esc(r.dates) + '</span></div>'
-        : '<div class="job-head"><h3>' + esc(r.title) + '</h3><span class="job-date">' + esc(r.dates) + '</span></div>')
-        + "<p>" + esc(r.text) + "</p>";
-    }).join("");
-    var prog = job.progression
-      ? '<div class="progression" role="note">' + esc(job.progression[0]) + ' <span class="arrow" aria-hidden="true">\u2192</span> ' + esc(job.progression[1]) + "</div>"
-      : "";
-    var noteHtml = job.note ? '<p class="note">' + esc(job.note) + "</p>" : "";
-    return '<div class="job">' + roles + prog + noteHtml + "</div>";
-  }).join("");
-
-  var skills = '<div class="skills-grid">' + d.skills.map(function (g) {
-    return "<div><h3>" + esc(g.group) + "</h3><ul>" +
-      g.items.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ul></div>";
-  }).join("") + "</div>";
-
-  var langs = d.languages.map(function (l) {
-    return "<strong>" + esc(l.lang) + "</strong> \u2014 " + esc(l.level);
-  }).join(" &nbsp;\u00b7&nbsp; ");
-
-  var certs = d.certifications.map(function (c) {
-    return '<div class="cert"><h3>' + esc(c.title) + ' <span class="org">\u2014 ' + esc(c.org) + "</span></h3><p>" +
-      esc(c.text) + ' <span class="note">' + esc(c.note) + "</span></p></div>";
-  }).join("");
-
-  var interests = d.interests.map(function (i) {
-    return "<strong>" + esc(i.title) + "</strong> \u2014 " + esc(i.text);
-  }).join(" &nbsp;\u00b7&nbsp; ");
-
-  return (
-    '<div class="cv-classic-head">' +
-      "<h1>" + esc(CONTACT.name) + "</h1>" +
-      '<p class="location">' + esc(d.location) + "</p>" +
-      '<p class="contact-line"><span><a href="' + CONTACT.phoneHref + '">' + esc(CONTACT.phone) + "</a></span>" +
-      '<span><a href="mailto:' + CONTACT.email + '">' + esc(CONTACT.email) + "</a></span>" +
-      '<span><a href="' + CONTACT.linkedin + '" target="_blank" rel="noopener">' + esc(CONTACT.linkedinShort) + "</a></span></p>" +
-      note +
-    "</div>" +
-    '<section class="cv-section"><h2>' + esc(d.ui.profile) + "</h2><p>" + esc(d.profileText) + "</p></section>" +
-    '<section class="cv-section"><h2>' + esc(d.ui.education) + "</h2>" +
-      '<div class="job-head"><h3>' + esc(d.education.school) + '</h3><span class="job-date">' + esc(d.education.years) + "</span></div>" +
-      "<p><strong>" + esc(d.education.programme) + "</strong></p>" +
-      d.education.lines.map(function (l) { return "<p>" + esc(l) + "</p>"; }).join("") +
-    "</section>" +
-    '<section class="cv-section"><h2>' + esc(d.ui.experience) + "</h2>" + jobs + "</section>" +
-    '<section class="cv-section"><h2>' + esc(d.ui.skills) + "</h2>" + skills + "</section>" +
-    '<section class="cv-section"><h2>' + esc(d.ui.languages) + '</h2><p class="lang-line">' + langs + "</p></section>" +
-    '<section class="cv-section"><h2>' + esc(d.ui.certifications) + "</h2>" + certs + "</section>" +
-    '<section class="cv-section"><h2>' + esc(d.ui.interests) + '</h2><p class="inline-list">' + interests + "</p></section>" +
-    '<section class="cv-section"><h2>' + esc(d.ui.references) + "</h2>" +
-      d.references.map(function (r) { return "<p>" + esc(r) + "</p>"; }).join("") + "</section>"
-  );
-}
 
 /* ---------- interactive render ---------- */
 function renderInteractive(d) {
@@ -232,25 +169,7 @@ function apply() {
   var dlBtns = document.querySelectorAll("[data-open-download] .dl-label");
   dlBtns.forEach(function (el) { el.textContent = d.ui.downloadShort; });
 
-  // version switch (classic / interactive pages)
-  var toClassic = document.getElementById("gotoClassic");
-  var toInteractive = document.getElementById("gotoInteractive");
-  if (toClassic) {
-    toClassic.textContent = d.ui.classic;
-    toClassic.setAttribute("href", classicHref(state.lang));
-    if (PAGE === "classic") toClassic.setAttribute("aria-current", "page");
-    else toClassic.removeAttribute("aria-current");
-  }
-  if (toInteractive) {
-    toInteractive.textContent = d.ui.interactive;
-    toInteractive.setAttribute("href", interactiveHref(state.lang));
-    if (PAGE === "interactive") toInteractive.setAttribute("aria-current", "page");
-    else toInteractive.removeAttribute("aria-current");
-  }
-
-  if (PAGE === "classic") {
-    document.getElementById("classicRoot").innerHTML = renderClassic(d, state.lang);
-  } else if (PAGE === "interactive") {
+  if (PAGE === "interactive") {
     document.getElementById("interactiveRoot").innerHTML = renderInteractive(d);
     renderNav(d);
     observeReveals();
@@ -260,57 +179,22 @@ function apply() {
 
   updateDialog(d);
 
-  var footer = document.getElementById("footerText");
-  if (footer) footer.textContent = d.ui.footer;
-
   var url = new URL(window.location.href);
   url.searchParams.set("lang", state.lang);
-  url.searchParams.delete("view"); // legacy param; pages are separate files now
+  url.searchParams.delete("view"); // legacy param; the site is interactive-only now
   window.history.replaceState(null, "", url.toString());
 }
 
-/* ---------- landing ---------- */
+/* ---------- landing: name, CV, View straight to the interactive CV ---------- */
 function applyLanding(d) {
-  var L = d.landing;
-  var set = function (id, txt) {
-    var el = document.getElementById(id);
-    if (el) el.textContent = txt;
-  };
-  set("viewBtn", L.view);
-  set("boringTitle", L.boring);
-  set("boringDesc", L.boringDesc);
-  set("funTitle", L.fun);
-  set("funDesc", L.funDesc);
-  set("backBtn", L.back);
-  var b = document.getElementById("boringOpen");
-  var f = document.getElementById("funOpen");
-  if (b) { b.textContent = L.open; b.setAttribute("href", classicHref(state.lang)); }
-  if (f) { f.textContent = L.open; f.setAttribute("href", interactiveHref(state.lang)); }
-
-  var v = params().get("view");
-  if (v === "classic") window.location.replace(classicHref(state.lang));
-  else if (v === "interactive") window.location.replace(interactiveHref(state.lang));
-}
-
-function wireLanding() {
   var viewBtn = document.getElementById("viewBtn");
-  var choices = document.getElementById("choices");
-  var backBtn = document.getElementById("backBtn");
-  if (!viewBtn || !choices) return;
-  viewBtn.addEventListener("click", function () {
-    choices.hidden = false;
-    viewBtn.hidden = true;
-    if (backBtn) backBtn.hidden = false;
-    choices.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    var first = choices.querySelector("a");
-    if (first) first.focus({ preventScroll: true });
-  });
-  if (backBtn) backBtn.addEventListener("click", function () {
-    choices.hidden = true;
-    backBtn.hidden = true;
-    viewBtn.hidden = false;
-    viewBtn.focus();
-  });
+  if (viewBtn) {
+    viewBtn.textContent = d.landing.view;
+    viewBtn.setAttribute("href", interactiveHref(state.lang));
+  }
+
+  // Legacy links (e.g. old PDFs) that still carry ?view= land on the interactive CV.
+  if (params().get("view")) window.location.replace(interactiveHref(state.lang));
 }
 
 /* ---------- events ---------- */
@@ -320,7 +204,6 @@ if (enBtn) enBtn.addEventListener("click", function () { setLang("en"); });
 if (svBtn) svBtn.addEventListener("click", function () { setLang("sv"); });
 
 wireDialog();
-wireLanding();
 
 /* active section highlight (interactive page) */
 window.addEventListener("scroll", function () {

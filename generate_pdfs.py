@@ -29,10 +29,10 @@ PHONE = "+46 769 502 461"
 EMAIL = "advaiyabahl@gmail.com"
 LINKEDIN = "https://linkedin.com/in/advaiyabahl/"
 LINKEDIN_SHORT = "linkedin.com/in/advaiyabahl"
+DISPLAY_URL = "advaiya-cv.onrender.com"  # printed in full so paper copies can be typed in
 
 EN = {
     "location": "Gothenburg, Sweden",
-    "nav_classic": "Classic", "nav_interactive": "Interactive",
     "profile_h": "Profile",
     "profile": (
         "I\u2019m a Year 2 Economics student at Kitas Gymnasium with practical experience across retail, "
@@ -94,7 +94,6 @@ EN = {
 
 SV = {
     "location": "G\u00f6teborg, Sverige",
-    "nav_classic": "Klassisk", "nav_interactive": "Interaktiv",
     "profile_h": "Profil",
     "profile": (
         "Jag g\u00e5r andra \u00e5ret p\u00e5 Ekonomiprogrammet p\u00e5 Kitas Gymnasium och har praktisk erfarenhet inom "
@@ -201,13 +200,12 @@ def build_pdf(data, is_english, out_path):
         return '<a href="%s" color="#0e6b6b">%s</a>' % (url, text)
 
     story = []
-    # Top navigation controls (clickable, as specified)
+    # Top language switch (clickable). The website is the interactive CV;
+    # this PDF is the classic version.
     story.append(Paragraph(
-        "%s &nbsp;|&nbsp; %s &nbsp;&nbsp;&bull;&nbsp;&nbsp; %s &nbsp;|&nbsp; %s" % (
+        "%s &nbsp;|&nbsp; %s" % (
             link(data["self_url"], "<b>EN</b>" if is_english else "EN"),
             link(data["other_url"], "SV" if is_english else "<b>SV</b>"),
-            link(data["self_url"], "<b>%s</b>" % data["nav_classic"]),
-            link(data["interactive_url"], data["nav_interactive"]),
         ), s_nav))
     story.append(HRFlowable(width="100%", thickness=0.6, color=INK, spaceAfter=6))
 
@@ -218,13 +216,25 @@ def build_pdf(data, is_english, out_path):
         '<a href="mailto:%s" color="#0e6b6b">%s</a> &nbsp;&bull;&nbsp; '
         '<a href="%s" color="#0e6b6b">%s</a>' % (PHONE, EMAIL, EMAIL, LINKEDIN, LINKEDIN_SHORT),
         s_contact))
+    # Interactive-version pointer with the URL printed in full so a
+    # paper printout can be typed into a browser.
     if is_english:
-        iline = "There\u2019s also an %s of this CV." % link(data["interactive_url"], "interactive version")
+        iline = ("There\u2019s also an interactive version of this CV: %s"
+                 % link(BASE_URL, "<b>" + DISPLAY_URL + "</b>"))
     else:
-        iline = "Det finns \u00e4ven en %s av detta CV." % link(data["interactive_url"], "interaktiv version")
-    story.append(Spacer(1, 3))
-    story.append(Paragraph(iline, s_iline))
-    story.append(Spacer(1, 5))
+        iline = ("Det finns \u00e4ven en interaktiv version av detta CV: %s"
+                 % link(BASE_URL, "<b>" + DISPLAY_URL + "</b>"))
+    story.append(Spacer(1, 4))
+    ibox = Table([[Paragraph(iline, s_iline)]], colWidths=[W])
+    ibox.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, -1), WASH),
+        ("BOX", (0, 0), (-1, -1), 0.6, ACCENT),
+        ("INNERPADDING", (0, 0), (-1, -1), 4),
+        ("TOPPADDING", (0, 0), (-1, -1), 3),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+    ]))
+    story.append(ibox)
+    story.append(Spacer(1, 6))
 
     def section(title, flowables):
         story.append(Paragraph(title.upper(), s_h2))
@@ -275,10 +285,13 @@ def build_pdf(data, is_english, out_path):
         cols.append(cell)
     sk = Table([cols], colWidths=[W / 3.0] * 3)
     sk.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"),
-                            ("LEFTPADDING", (0, 0), (-1, -1), 0),
-                            ("RIGHTPADDING", (0, 0), (-1, -1), 6),
-                            ("TOPPADDING", (0, 0), (-1, -1), 0),
-                            ("BOTTOMPADDING", (0, 0), (-1, -1), 0)]))
+                            ("BACKGROUND", (0, 0), (-1, -1), HexColor("#f4f6f9")),
+                            ("BOX", (0, 0), (-1, -1), 0.5, LINE),
+                            ("INNERGRID", (0, 0), (-1, -1), 0.5, LINE),
+                            ("LEFTPADDING", (0, 0), (-1, -1), 5),
+                            ("RIGHTPADDING", (0, 0), (-1, -1), 5),
+                            ("TOPPADDING", (0, 0), (-1, -1), 4),
+                            ("BOTTOMPADDING", (0, 0), (-1, -1), 4)]))
     section(data["skills_h"], [sk])
 
     section(data["lang_h"], [Paragraph(
@@ -296,11 +309,8 @@ def build_pdf(data, is_english, out_path):
 
     story.append(HRFlowable(width="100%", thickness=0.5, color=LINE, spaceAfter=4))
     story.append(Paragraph(
-        "%s &nbsp;|&nbsp; %s &nbsp;&nbsp;&bull;&nbsp;&nbsp; %s &nbsp;|&nbsp; %s &nbsp;&nbsp;&bull;&nbsp;&nbsp; %s: %s" % (
+        "%s &nbsp;|&nbsp; %s" % (
             link(data["self_url"], "EN"), link(data["other_url"], "SV"),
-            link(data["self_url"], data["nav_classic"]), link(data["interactive_url"], data["nav_interactive"]),
-            "Interactive CV" if is_english else "Interaktiv CV",
-            link(data["interactive_url"], data["interactive_url"]),
         ), s_foot))
 
     doc.build(story)

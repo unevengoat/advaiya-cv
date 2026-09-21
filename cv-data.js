@@ -5,7 +5,6 @@
 var SITE_URL = "https://advaiya-cv.onrender.com"; // <-- set to the real Render URL
 var PDF_EN = "pdfs/Advaiya-Bahl-CV-EN.pdf";
 var PDF_SV = "pdfs/Advaiya-Bahl-CV-SV.pdf";
-var CLASSIC_URL = "classic.html";
 var INTERACTIVE_URL = "interactive.html";
 
 var CV = {
@@ -15,8 +14,6 @@ var CV = {
     contactLabels: { location: "Location", phone: "Phone", email: "Email", linkedin: "LinkedIn" },
     ui: {
       skip: "Skip to content",
-      classic: "Classic",
-      interactive: "Interactive",
       downloadShort: "Download PDF",
       downloadPrimary: "Download English PDF",
       alsoAvailable: "Also available:",
@@ -31,17 +28,9 @@ var CV = {
       interests: "Interests",
       references: "References",
       tagline: "Year 2 Economics student — retail, coaching, AI automation & performance marketing",
-      interactiveNote: 'There\u2019s also an <a href="{url}">interactive version</a> of this CV.',
-      footer: "Advaiya Bahl — bilingual CV (EN / SV) · Classic / Interactive · PDFs link back to the interactive version."
     },
     landing: {
-      view: "View",
-      boring: "The boring one",
-      boringDesc: "The classic CV — clean, calm and recruiter-friendly.",
-      fun: "The fun one",
-      funDesc: "The interactive CV — the same content, more alive.",
-      open: "Open",
-      back: "Back"
+      view: "View"
     },
     profileText: "I\u2019m a Year 2 Economics student at Kitas Gymnasium with practical experience across retail, customer service, coaching, AI automation and performance marketing. I\u2019ve taken on responsibility early, from leading my own MMA sessions to working with AI-driven marketing systems and helping customers in a retail environment. I\u2019m particularly interested in business, technology, finance and entrepreneurship, and I enjoy learning by building things and taking on practical challenges. I work well independently, but I also value being part of a team and contributing wherever I can.",
     education: {
@@ -135,8 +124,6 @@ var CV = {
     contactLabels: { location: "Ort", phone: "Telefon", email: "E-post", linkedin: "LinkedIn" },
     ui: {
       skip: "Hoppa till inneh\u00e5ll",
-      classic: "Klassisk",
-      interactive: "Interaktiv",
       downloadShort: "Ladda ner PDF",
       downloadPrimary: "Ladda ner svensk PDF",
       alsoAvailable: "Finns \u00e4ven som:",
@@ -151,17 +138,9 @@ var CV = {
       interests: "Intressen",
       references: "Referenser",
       tagline: "Andra \u00e5ret p\u00e5 Ekonomiprogrammet \u2014 butik, coaching, AI-automation & performance marketing",
-      interactiveNote: 'Det finns \u00e4ven en <a href="{url}">interaktiv version</a> av detta CV.',
-      footer: "Advaiya Bahl \u2014 tv\u00e5spr\u00e5kig CV (EN / SV) · Klassisk / Interaktiv · PDF:erna l\u00e4nkar tillbaka till den interaktiva versionen."
     },
     landing: {
-      view: "Visa",
-      boring: "Den tr\u00e5kiga",
-      boringDesc: "Det klassiska CV:t \u2014 rent, lugnt och rekryterarv\u00e4nligt.",
-      fun: "Den roliga",
-      funDesc: "Det interaktiva CV:t \u2014 samma inneh\u00e5ll, mer levande.",
-      open: "\u00d6ppna",
-      back: "Tillbaka"
+      view: "Visa"
     },
     profileText: "Jag g\u00e5r andra \u00e5ret p\u00e5 Ekonomiprogrammet p\u00e5 Kitas Gymnasium och har praktisk erfarenhet inom bland annat handel, kundservice, coaching, AI-automation och performance marketing. Jag har tidigt f\u00e5tt ta eget ansvar, bland annat genom att leda egna MMA-pass och arbeta med AI-drivna marknadsf\u00f6ringssystem samt kundservice i butik. Jag \u00e4r s\u00e4rskilt intresserad av f\u00f6retagande, teknik, ekonomi och entrepren\u00f6rskap och tycker om att l\u00e4ra mig genom att bygga saker och ta mig an praktiska utmaningar. Jag arbetar bra sj\u00e4lvst\u00e4ndigt, men trivs ocks\u00e5 med att vara en del av ett team och bidra d\u00e4r det beh\u00f6vs.",
     education: {

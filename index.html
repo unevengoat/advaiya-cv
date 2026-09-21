@@ -30,22 +30,7 @@
   <img class="landing-photo" src="profile.jpg" alt="Advaiya Bahl" onerror="this.style.display='none'">
   <h1 class="landing-name">Advaiya Bahl</h1>
   <p class="landing-cv" aria-hidden="true">CV</p>
-  <button type="button" class="btn primary big" id="viewBtn">View</button>
-  <div id="choices" hidden>
-    <div class="choice-grid">
-      <section class="choice" aria-labelledby="boringTitle">
-        <h2 id="boringTitle">The boring one</h2>
-        <p id="boringDesc"></p>
-        <a class="btn ghost" id="boringOpen" href="classic.html">Open</a>
-      </section>
-      <section class="choice fun" aria-labelledby="funTitle">
-        <h2 id="funTitle">The fun one</h2>
-        <p id="funDesc"></p>
-        <a class="btn primary" id="funOpen" href="interactive.html">Open</a>
-      </section>
-    </div>
-    <button type="button" class="linklike" id="backBtn" hidden>Back</button>
-  </div>
+  <a class="btn primary big" id="viewBtn" href="interactive.html">View</a>
 </main>
 
 <dialog class="dl-dialog" id="dlDialog" aria-labelledby="dlTitle">
@@ -59,14 +44,10 @@
   <form method="dialog"><button class="btn ghost" id="dlClose" value="close">Close</button></form>
 </dialog>
 
-<footer class="footer">
-  <p id="footerText"></p>
-</footer>
-
 <noscript>
   <div style="max-width:60ch;margin:2rem auto;padding:1rem;font-family:sans-serif">
     <p>This page needs JavaScript for language switching.</p>
-    <p><a href="classic.html">Classic CV</a> | <a href="interactive.html">Interactive CV</a></p>
+    <p><a href="interactive.html">Interactive CV</a></p>
     <p><a href="pdfs/Advaiya-Bahl-CV-EN.pdf">English PDF</a> | <a href="pdfs/Advaiya-Bahl-CV-SV.pdf">Svensk PDF</a></p>
   </div>
 </noscript>
