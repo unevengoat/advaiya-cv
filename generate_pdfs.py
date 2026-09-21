@@ -167,33 +167,33 @@ def build_pdf(data, is_english, out_path):
 
     s_nav = ParagraphStyle("nav", fontName="Helvetica", fontSize=7, leading=9,
                            textColor=MUTED, alignment=2, spaceAfter=2)
-    s_h1 = ParagraphStyle("h1", fontName="Helvetica-Bold", fontSize=19, leading=21,
-                          textColor=INK, spaceAfter=0)
-    s_loc = ParagraphStyle("loc", fontName="Helvetica", fontSize=8, leading=10,
+    s_h1 = ParagraphStyle("h1", fontName="Helvetica-Bold", fontSize=20, leading=22,
+                          textColor=INK, spaceAfter=1)
+    s_loc = ParagraphStyle("loc", fontName="Helvetica", fontSize=8.2, leading=10.5,
                            textColor=MUTED, spaceAfter=1)
-    s_contact = ParagraphStyle("contact", fontName="Helvetica", fontSize=7.8, leading=10,
+    s_contact = ParagraphStyle("contact", fontName="Helvetica", fontSize=8, leading=10.5,
                                textColor=SOFT, spaceAfter=0)
-    s_h2 = ParagraphStyle("h2", fontName="Helvetica-Bold", fontSize=8.3, leading=10,
+    s_h2 = ParagraphStyle("h2", fontName="Helvetica-Bold", fontSize=8.8, leading=10.5,
                           textColor=ACCENT, spaceBefore=0, spaceAfter=1)
-    s_body = ParagraphStyle("body", fontName="Helvetica", fontSize=7.9, leading=10,
-                            textColor=INK, spaceAfter=2)
-    s_title = ParagraphStyle("title", fontName="Helvetica-Bold", fontSize=8.2, leading=10,
-                             textColor=INK, spaceAfter=0)
-    s_date = ParagraphStyle("date", fontName="Helvetica", fontSize=7.3, leading=10,
-                            textColor=MUTED, alignment=2)
-    s_note = ParagraphStyle("note", fontName="Helvetica-Oblique", fontSize=7.6, leading=9.5,
-                            textColor=SOFT, spaceAfter=1)
-    s_prog = ParagraphStyle("prog", fontName="Helvetica-Bold", fontSize=7.8, leading=10,
-                            textColor=ACCENT, alignment=1, spaceBefore=1, spaceAfter=1)
-    s_small = ParagraphStyle("small", fontName="Helvetica", fontSize=7.9, leading=10,
+    s_body = ParagraphStyle("body", fontName="Helvetica", fontSize=8.4, leading=11,
+                            textColor=INK, spaceAfter=2.5)
+    s_title = ParagraphStyle("title", fontName="Helvetica-Bold", fontSize=8.6, leading=10.5,
                              textColor=INK, spaceAfter=1)
-    s_skill_h = ParagraphStyle("skh", fontName="Helvetica-Bold", fontSize=7.6, leading=9,
-                               textColor=SOFT, spaceAfter=1)
-    s_skill = ParagraphStyle("sk", fontName="Helvetica", fontSize=7.6, leading=9.3,
+    s_date = ParagraphStyle("date", fontName="Helvetica", fontSize=7.5, leading=10.5,
+                            textColor=MUTED, alignment=2)
+    s_note = ParagraphStyle("note", fontName="Helvetica-Oblique", fontSize=8, leading=10,
+                            textColor=SOFT, spaceAfter=1)
+    s_prog = ParagraphStyle("prog", fontName="Helvetica-Bold", fontSize=8, leading=10.5,
+                            textColor=ACCENT, alignment=1, spaceBefore=1, spaceAfter=1)
+    s_small = ParagraphStyle("small", fontName="Helvetica", fontSize=8.3, leading=10.5,
+                             textColor=INK, spaceAfter=1.5)
+    s_skill_h = ParagraphStyle("skh", fontName="Helvetica-Bold", fontSize=8, leading=10,
+                               textColor=SOFT, spaceAfter=1.5)
+    s_skill = ParagraphStyle("sk", fontName="Helvetica", fontSize=8, leading=10,
                              textColor=INK, spaceAfter=0)
     s_foot = ParagraphStyle("foot", fontName="Helvetica", fontSize=6.8, leading=8.5,
                             textColor=MUTED, alignment=1, spaceBefore=0)
-    s_iline = ParagraphStyle("iline", fontName="Helvetica", fontSize=7.9, leading=10,
+    s_iline = ParagraphStyle("iline", fontName="Helvetica", fontSize=8.2, leading=10.5,
                              textColor=SOFT, spaceAfter=0)
 
     def link(url, text):
@@ -219,10 +219,10 @@ def build_pdf(data, is_english, out_path):
     # Interactive-version pointer with the URL printed in full so a
     # paper printout can be typed into a browser.
     if is_english:
-        iline = ("There\u2019s also an interactive version of this CV: %s"
+        iline = ("There\u2019s also an interactive version of this CV that I built: %s"
                  % link(BASE_URL, "<b>" + DISPLAY_URL + "</b>"))
     else:
-        iline = ("Det finns \u00e4ven en interaktiv version av detta CV: %s"
+        iline = ("Det finns \u00e4ven en interaktiv version av detta CV som jag har byggt: %s"
                  % link(BASE_URL, "<b>" + DISPLAY_URL + "</b>"))
     story.append(Spacer(1, 4))
     ibox = Table([[Paragraph(iline, s_iline)]], colWidths=[W])
