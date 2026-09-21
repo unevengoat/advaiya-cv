@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Advaiya Bahl — CV</title>
-<meta name="description" content="Advaiya Bahl — Year 2 Economics student at Kitas Gymnasium. Bilingual CV (English / Svenska), Classic and Interactive versions.">
+<meta name="description" content="Advaiya Bahl — interactive CV. Bilingual (English / Svenska).">
 <link rel="stylesheet" href="styles.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2316202e'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 </head>
-<body data-page="landing">
+<body data-page="interactive">
 <a class="skip-link" href="#main" id="skipLink">Skip to content</a>
 
 <header class="topbar" role="banner">
@@ -19,6 +19,10 @@
         <button type="button" id="langEn" aria-pressed="true">EN</button>
         <button type="button" id="langSv" aria-pressed="false">SV</button>
       </div>
+      <div class="seg" role="group" aria-label="Version">
+        <a id="gotoClassic" href="classic.html">Classic</a>
+        <a id="gotoInteractive" href="interactive.html">Interactive</a>
+      </div>
       <button type="button" class="dl-top" data-open-download>
         <span aria-hidden="true">&#8595;</span> <span class="dl-label">Download PDF</span>
       </button>
@@ -26,26 +30,14 @@
   </div>
 </header>
 
-<main id="main" class="landing">
-  <img class="landing-photo" src="profile.jpg" alt="Advaiya Bahl" onerror="this.style.display='none'">
-  <h1 class="landing-name">Advaiya Bahl</h1>
-  <p class="landing-cv" aria-hidden="true">CV</p>
-  <button type="button" class="btn primary big" id="viewBtn">View</button>
-  <div id="choices" hidden>
-    <div class="choice-grid">
-      <section class="choice" aria-labelledby="boringTitle">
-        <h2 id="boringTitle">The boring one</h2>
-        <p id="boringDesc"></p>
-        <a class="btn ghost" id="boringOpen" href="classic.html">Open</a>
-      </section>
-      <section class="choice fun" aria-labelledby="funTitle">
-        <h2 id="funTitle">The fun one</h2>
-        <p id="funDesc"></p>
-        <a class="btn primary" id="funOpen" href="interactive.html">Open</a>
-      </section>
-    </div>
-    <button type="button" class="linklike" id="backBtn" hidden>Back</button>
-  </div>
+<nav class="section-nav" id="sectionNav" aria-label="Sections">
+  <div class="section-nav-inner" id="sectionNavInner"></div>
+</nav>
+
+<main id="main">
+  <article class="interactive" aria-label="Interactive CV">
+    <div id="interactiveRoot"></div>
+  </article>
 </main>
 
 <dialog class="dl-dialog" id="dlDialog" aria-labelledby="dlTitle">
@@ -65,8 +57,7 @@
 
 <noscript>
   <div style="max-width:60ch;margin:2rem auto;padding:1rem;font-family:sans-serif">
-    <p>This page needs JavaScript for language switching.</p>
-    <p><a href="classic.html">Classic CV</a> | <a href="interactive.html">Interactive CV</a></p>
+    <p>This CV needs JavaScript for language switching.</p>
     <p><a href="pdfs/Advaiya-Bahl-CV-EN.pdf">English PDF</a> | <a href="pdfs/Advaiya-Bahl-CV-SV.pdf">Svensk PDF</a></p>
   </div>
 </noscript>

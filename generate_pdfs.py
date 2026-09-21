@@ -15,8 +15,8 @@ from reportlab.platypus import (
 BASE_URL = "https://advaiya-cv.onrender.com"
 PDF_EN_URL = BASE_URL + "/pdfs/Advaiya-Bahl-CV-EN.pdf"
 PDF_SV_URL = BASE_URL + "/pdfs/Advaiya-Bahl-CV-SV.pdf"
-INT_EN_URL = BASE_URL + "/?lang=en&view=interactive"
-INT_SV_URL = BASE_URL + "/?lang=sv&view=interactive"
+INT_EN_URL = BASE_URL + "/interactive.html?lang=en"
+INT_SV_URL = BASE_URL + "/interactive.html?lang=sv"
 
 INK = HexColor("#16202e")
 SOFT = HexColor("#33415a")
@@ -194,6 +194,8 @@ def build_pdf(data, is_english, out_path):
                              textColor=INK, spaceAfter=0)
     s_foot = ParagraphStyle("foot", fontName="Helvetica", fontSize=6.8, leading=8.5,
                             textColor=MUTED, alignment=1, spaceBefore=0)
+    s_iline = ParagraphStyle("iline", fontName="Helvetica", fontSize=7.9, leading=10,
+                             textColor=SOFT, spaceAfter=0)
 
     def link(url, text):
         return '<a href="%s" color="#0e6b6b">%s</a>' % (url, text)
@@ -216,7 +218,13 @@ def build_pdf(data, is_english, out_path):
         '<a href="mailto:%s" color="#0e6b6b">%s</a> &nbsp;&bull;&nbsp; '
         '<a href="%s" color="#0e6b6b">%s</a>' % (PHONE, EMAIL, EMAIL, LINKEDIN, LINKEDIN_SHORT),
         s_contact))
-    story.append(Spacer(1, 7))
+    if is_english:
+        iline = "There\u2019s also an %s of this CV." % link(data["interactive_url"], "interactive version")
+    else:
+        iline = "Det finns \u00e4ven en %s av detta CV." % link(data["interactive_url"], "interaktiv version")
+    story.append(Spacer(1, 3))
+    story.append(Paragraph(iline, s_iline))
+    story.append(Spacer(1, 5))
 
     def section(title, flowables):
         story.append(Paragraph(title.upper(), s_h2))
